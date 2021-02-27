@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Tncrm Admin',
+    'name' => 'Tncrm Dealer',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img src="/vendor/dcat-admin/images/logo.png" width="35"> &nbsp;Tncrm Admin',
+    'logo' => '<img src="/vendor/dcat-admin/images/logo.png" width="35"> &nbsp;Tncrm Dealer',
 
     /*
     |--------------------------------------------------------------------------
@@ -37,14 +37,14 @@ return [
     'logo-mini' => '<img src="/vendor/dcat-admin/images/logo.png">',
 
     /*
-     |--------------------------------------------------------------------------
-     | User default avatar
-     |--------------------------------------------------------------------------
-     |
-     | Set a default avatar for newly created users.
-     |
-     */
-    'default_avatar' => '@admin/images/default-avatar.jpg',
+	 |--------------------------------------------------------------------------
+	 | User default avatar
+	 |--------------------------------------------------------------------------
+	 |
+	 | Set a default avatar for newly created users.
+	 |
+	 */
+	'default_avatar' => '@admin/images/default-avatar.jpg',
 
     /*
     |--------------------------------------------------------------------------
@@ -59,13 +59,11 @@ return [
     'route' => [
         'domain' => env('ADMIN_ROUTE_DOMAIN'),
 
-        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
+        'prefix' => 'dealer',
 
-        'namespace' => 'App\\Admin\\Controllers',
+        'namespace' => 'App\\Dealer\\Controllers',
 
         'middleware' => ['web', 'admin'],
-
-        'enable_session_middleware' => false,
     ],
 
     /*
@@ -78,7 +76,7 @@ return [
     | be set before running `artisan admin::install` to take effect.
     |
     */
-    'directory' => app_path('Admin'),
+    'directory' => app_path('Dealer'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,21 +120,21 @@ return [
     'auth' => [
         'enable' => true,
 
-        'controller' => App\Admin\Controllers\AuthController::class,
+        'controller' => App\Dealer\Controllers\AuthController::class,
 
-        'guard' => 'admin',
+        'guard' => 'dealer',
 
         'guards' => [
-            'admin' => [
+            'dealer' => [
                 'driver'   => 'session',
-                'provider' => 'admin',
+                'provider' => 'dealer',
             ],
         ],
 
         'providers' => [
-            'admin' => [
+            'dealer' => [
                 'driver' => 'eloquent',
-                'model'  => Dcat\Admin\Models\Administrator::class,
+                'model'  => App\Models\Dealer\Administrator::class,
             ],
         ],
 
@@ -150,7 +148,6 @@ return [
             'auth/logout',
         ],
 
-        'enable_session_middleware' => false,
     ],
 
     'grid' => [
@@ -211,7 +208,7 @@ return [
         // Whether enable menu bind to a permission.
         'bind_permission' => true,
 
-        'default_icon' => 'feather icon-circle',
+		'default_icon' => 'feather icon-circle',
     ],
 
     /*
@@ -249,29 +246,29 @@ return [
         'connection' => '',
 
         // User tables and model.
-        'users_table' => 'admin_users',
-        'users_model' => Dcat\Admin\Models\Administrator::class,
+        'users_table' => 'dealer_users',
+        'users_model' => App\Models\Dealer\Administrator::class,
 
         // Role table and model.
-        'roles_table' => 'admin_roles',
-        'roles_model' => Dcat\Admin\Models\Role::class,
+        'roles_table' => 'dealer_roles',
+        'roles_model' => App\Models\Dealer\Role::class,
 
         // Permission table and model.
-        'permissions_table' => 'admin_permissions',
-        'permissions_model' => Dcat\Admin\Models\Permission::class,
+        'permissions_table' => 'dealer_permissions',
+        'permissions_model' => App\Models\Dealer\Permission::class,
 
         // Menu table and model.
-        'menu_table' => 'admin_menu',
-        'menu_model' => Dcat\Admin\Models\Menu::class,
+        'menu_table' => 'dealer_menu',
+        'menu_model' => App\Models\Dealer\Menu::class,
 
         // Pivot table for table above.
-        'role_users_table'       => 'admin_role_users',
-        'role_permissions_table' => 'admin_role_permissions',
-        'role_menu_table'        => 'admin_role_menu',
-        'permission_menu_table'  => 'admin_permission_menu',
+        'role_users_table'       => 'dealer_role_users',
+        'role_permissions_table' => 'dealer_role_permissions',
+        'role_menu_table'        => 'dealer_role_menu',
+        'permission_menu_table'  => 'dealer_permission_menu',
         'settings_table'         => 'admin_settings',
-        'extensions_table'       => 'admin_extensions',
-        'extension_histories_table' => 'admin_extension_histories',
+		'extensions_table'       => 'admin_extensions',
+		'extension_histories_table' => 'admin_extension_histories',
     ],
 
     /*
@@ -285,7 +282,7 @@ return [
         // default, blue, blue-light, green
         'color' => 'default',
 
-        // sidebar-separate
+		// sidebar-separate
         'body_class' => [],
 
         'horizontal_menu' => false,
@@ -293,7 +290,7 @@ return [
         'sidebar_collapsed' => false,
 
         // light, primary, dark
-        'sidebar_style' => 'light',
+		'sidebar_style' => 'light',
 
         'dark_mode_switch' => false,
 
@@ -307,7 +304,7 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'exception_handler' => Dcat\Admin\Exception\Handler::class,
+    'exception_handler' => Dcat\Admin\Http\Exception\Handler::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -317,24 +314,4 @@ return [
     | Whether enable default breadcrumb for every page content.
     */
     'enable_default_breadcrumb' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Extension
-    |--------------------------------------------------------------------------
-    */
-    'extension' => [
-        // When you use command `php artisan admin:ext-make` to generate extensions,
-        // the extension files will be generated in this directory.
-        'dir' => base_path('dcat-admin-extensions'),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Extension
-    |--------------------------------------------------------------------------
-    */
-    'multi_app' => [
-        'dealer' => true
-    ]
 ];
