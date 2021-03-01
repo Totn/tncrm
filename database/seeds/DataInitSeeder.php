@@ -11,9 +11,9 @@ class DataInitSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(
+        $this->call([
             AdminInitSeeder::class,
             DealerInitSeeder::class
-        );
+        ]);
     }
 }
